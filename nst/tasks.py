@@ -29,3 +29,11 @@ def download_coco_2014_train(output_dir):
 
     os.rename(extracted_fpath, renamed_fpath)
     os.remove(zip_fpath)
+
+
+def train_model(args):
+    pass
+
+
+def stylize_image(args):
+    pass
