@@ -1,0 +1,11 @@
+.idea
+.ipynb_checkpoints
+__pycache__
+
+ckpt
+log
+data/coco_2014_train
+
+.DS_Store
+*.pyc
+
