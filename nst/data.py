@@ -45,8 +45,10 @@ def load_image(image_fpath, image_size=None):
     image = tf.image.decode_image(image, channels=3, expand_animations=False)
     image = tf.image.convert_image_dtype(image, tf.float32)
     if image_size is not None:
+        image_shape = tf.shape(image)
+        height_and_width = tf.minimum(image_shape[0], image_shape[1])
+        image = tf.image.resize_with_crop_or_pad(image, height_and_width, height_and_width)
         image = tf.image.resize(image, image_size, preserve_aspect_ratio=True)
-        image = tf.image.resize_with_crop_or_pad(image, image_size[0], image_size[1])
     return image
 
 
