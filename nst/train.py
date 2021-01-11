@@ -17,7 +17,7 @@ def train_model(args):
     checkpoint_manager = tf.train.CheckpointManager(checkpoint, args.ckpt_dir, max_to_keep=1)
     summary_writer = tf.summary.create_file_writer(args.log_dir)
 
-    style_image = load_image(args.style_image_path)
+    style_image = load_image(args.style_image_path, args.style_image_size)
     style_image = tf.expand_dims(style_image, axis=0)
     style_image = tf.repeat(style_image, repeats=args.batch_size, axis=0)
     style_image = normalize_image_batch(style_image)
