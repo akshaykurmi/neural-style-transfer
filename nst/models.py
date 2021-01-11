@@ -8,17 +8,17 @@ class VGG16(tf.keras.Model):
         vgg_layers = tf.keras.applications.VGG16(include_top=False, weights='imagenet', input_shape=None).layers
         for layer in vgg_layers:
             layer.trainable = False
-        self.block1 = tf.keras.Sequential(vgg_layers[0:3])
-        self.block2 = tf.keras.Sequential(vgg_layers[3:6])
-        self.block3 = tf.keras.Sequential(vgg_layers[6:10])
-        self.block4 = tf.keras.Sequential(vgg_layers[10:14])
+        self.relu1_2 = tf.keras.Sequential(vgg_layers[0:3])
+        self.relu2_2 = tf.keras.Sequential(vgg_layers[3:6])
+        self.relu3_3 = tf.keras.Sequential(vgg_layers[6:10])
+        self.relu4_3 = tf.keras.Sequential(vgg_layers[10:14])
 
     def call(self, inputs, training=None, mask=None):
-        b1 = self.block1(inputs)
-        b2 = self.block2(b1)
-        b3 = self.block3(b2)
-        b4 = self.block4(b3)
-        return {'block1': b1, 'block2': b2, 'block3': b3, 'block4': b4}
+        r1 = self.relu1_2(inputs)
+        r2 = self.relu2_2(r1)
+        r3 = self.relu3_3(r2)
+        r4 = self.relu4_3(r3)
+        return {'relu1_2': r1, 'relu2_2': r2, 'relu3_3': r3, 'relu4_3': r4}
 
     def get_config(self):
         super().get_config()

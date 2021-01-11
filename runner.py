@@ -1,7 +1,9 @@
 import argparse
 import os
 
-from nst.tasks import train_model, stylize_image, download_coco_2014_train
+from nst.data import download_coco_2014_train
+from nst.eval import stylize_image
+from nst.train import train_model
 
 parser = argparse.ArgumentParser()
 
@@ -11,17 +13,18 @@ parser.add_argument('--task', required=True, type=str, choices=['download_data',
 parser.add_argument('--run_id', required=True, type=str, help='Unique identifier for the model')
 
 # Task = train
-parser.add_argument('--style-image', required=True, type=str, help='Path to the style image')
+parser.add_argument('--style_image_path', type=str, help='Path to the style image')
 
 # Task = stylize_image
-parser.add_argument('--content-image', required=True, type=str, help='Path to the image to stylize')
-parser.add_argument('--output-image', required=True, type=str, help='Path to save the stylized image to')
+parser.add_argument('--content_image_path', type=str, help='Path to the image to stylize')
+parser.add_argument('--output_image_path', type=str, help='Path to save the stylized image to')
 
 args = parser.parse_args()
 
 # Paths
 args.base_dir = os.path.abspath(os.path.dirname(__file__))
 args.data_dir = os.path.join(args.base_dir, 'data')
+args.coco_img_dir = os.path.join(args.data_dir, 'coco_2014_train')
 args.output_dir = os.path.join(args.base_dir, 'output', args.run_id)
 args.ckpt_dir = os.path.join(args.output_dir, 'ckpt')
 args.log_dir = os.path.join(args.output_dir, 'log')
@@ -29,8 +32,8 @@ args.log_dir = os.path.join(args.output_dir, 'log')
 # Training hyperparameters
 args.epochs = 2
 args.batch_size = 4
-args.content_image_size = (512, 512)
-args.style_image_size = (512, 512)
+args.content_image_size = (256, 256)
+args.style_image_size = None
 args.content_weight = 1e5
 args.style_weight = 1e10
 args.learning_rate = 1e-3

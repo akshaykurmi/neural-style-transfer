@@ -2,6 +2,7 @@ import os
 import zipfile
 from urllib.request import urlopen
 
+import tensorflow as tf
 from tqdm import tqdm
 
 
@@ -31,9 +32,23 @@ def download_coco_2014_train(output_dir):
     os.remove(zip_fpath)
 
 
-def train_model(args):
-    pass
+def load_coco_2014_train(images_dir, image_size, batch_size):
+    dataset = tf.data.Dataset.list_files(os.path.join(images_dir, '*.jpg'))
+    dataset = dataset.map(lambda image_fpath: load_image(image_fpath, image_size), num_parallel_calls=tf.data.AUTOTUNE)
+    dataset = dataset.batch(batch_size)
+    dataset = dataset.prefetch(tf.data.AUTOTUNE)
+    return dataset
 
 
-def stylize_image(args):
-    pass
+def load_image(image_fpath, image_size=None):
+    image = tf.io.read_file(image_fpath)
+    image = tf.image.decode_image(image, expand_animations=False)
+    image = tf.image.convert_image_dtype(image, tf.float32)
+    if image_size is not None:
+        image = tf.image.resize(image, image_size, preserve_aspect_ratio=True)
+        image = tf.image.resize_with_crop_or_pad(image, image_size[0], image_size[1])
+    return image
+
+
+def save_image(image, output_fpath):
+    tf.keras.preprocessing.image.save_img(output_fpath, image, data_format='channels_last', scale=True)
