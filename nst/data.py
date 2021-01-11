@@ -42,7 +42,7 @@ def load_coco_2014_train(images_dir, image_size, batch_size):
 
 def load_image(image_fpath, image_size=None):
     image = tf.io.read_file(image_fpath)
-    image = tf.image.decode_image(image, expand_animations=False)
+    image = tf.image.decode_image(image, channels=3, expand_animations=False)
     image = tf.image.convert_image_dtype(image, tf.float32)
     if image_size is not None:
         image = tf.image.resize(image, image_size, preserve_aspect_ratio=True)
