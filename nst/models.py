@@ -13,13 +13,8 @@ class VGG16(tf.keras.Model):
         self.relu3_3 = tf.keras.Sequential(vgg_layers[6:10])
         self.relu4_3 = tf.keras.Sequential(vgg_layers[10:14])
 
-        self.imagenet_mean = tf.reshape(tf.constant([0.485, 0.456, 0.406]), (1, 1, -1))
-        self.imagenet_std = tf.reshape(tf.constant([0.229, 0.224, 0.225]), (1, 1, -1))
-
     def call(self, inputs, training=None, mask=None):
-        inputs /= 255.0
-        inputs -= self.imagenet_mean
-        inputs /= self.imagenet_std
+        inputs = tf.keras.applications.vgg16.preprocess_input(inputs, data_format='channels_last')
         r1 = self.relu1_2(inputs)
         r2 = self.relu2_2(r1)
         r3 = self.relu3_3(r2)
