@@ -19,8 +19,7 @@ def train_model(args):
     style_image = tf.expand_dims(style_image, axis=0)
     style_image = tf.repeat(style_image, repeats=args.batch_size, axis=0)
     style_features = vgg(style_image)
-    style_features_gram_matrix = {k: tf.reshape(gram_matrix(v), [args.batch_size, -1])
-                                  for k, v in style_features.items()}
+    style_features_gram_matrix = {k: gram_matrix(v) for k, v in style_features.items()}
 
     train_dataset = load_coco_2014_train(args.coco_img_dir, args.content_image_size, args.batch_size)
     n_batches = tf.data.experimental.cardinality(train_dataset).numpy()
@@ -49,18 +48,13 @@ def train_step(vgg, style_transfer_net, optimizer, mse, X_batch, style_features_
         Y_batch = style_transfer_net(X_batch)
         features_X = vgg(X_batch)
         features_Y = vgg(Y_batch)
-        features_Y_gram_matrix = {k: tf.reshape(gram_matrix(v), [actual_batch_size, -1])
-                                  for k, v in features_Y.items()}
 
-        content_loss = content_weight * mse(
-            tf.reshape(features_Y['relu2_2'], [actual_batch_size, -1]),
-            tf.reshape(features_X['relu2_2'], [actual_batch_size, -1])
-        )
+        content_loss = content_weight * mse(features_Y['relu2_2'], features_X['relu2_2'])
         style_loss = 0.0
         for k in ['relu1_2', 'relu2_2', 'relu3_3', 'relu4_3']:
             style_loss += mse(
-                features_Y_gram_matrix[k],
-                style_features_gram_matrix[k][:actual_batch_size, :],
+                gram_matrix(features_Y[k]),
+                style_features_gram_matrix[k][:actual_batch_size, :, :],
             )
         style_loss *= style_weight
         total_loss = content_loss + style_loss

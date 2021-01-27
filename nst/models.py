@@ -126,5 +126,5 @@ class ResidualConvBlock(tf.keras.layers.Layer):
 
 
 def create_instance_norm_layer():
-    return tfa.layers.InstanceNormalization(axis=-1, center=True, scale=True, beta_initializer='random_uniform',
-                                            gamma_initializer='random_uniform')
+    return tfa.layers.InstanceNormalization(axis=-1, center=True, scale=True, beta_initializer='zeros',
+                                            gamma_initializer='ones')

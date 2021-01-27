@@ -43,13 +43,12 @@ def load_coco_2014_train(images_dir, image_size, batch_size):
 def load_image(image_fpath, image_size=None):
     image = tf.io.read_file(image_fpath)
     image = tf.image.decode_image(image, channels=3, expand_animations=False)
-    image = tf.image.convert_image_dtype(image, tf.float32)
     if image_size is not None:
         image_shape = tf.shape(image)
         height_and_width = tf.minimum(image_shape[0], image_shape[1])
         image = tf.image.resize_with_crop_or_pad(image, height_and_width, height_and_width)
         image = tf.image.resize(image, image_size, preserve_aspect_ratio=True)
-    return image
+    return tf.math.round(image)
 
 
 def save_image(image, output_fpath):
