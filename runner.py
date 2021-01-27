@@ -1,5 +1,6 @@
 import argparse
 import os
+from datetime import datetime
 
 from nst.data import download_coco_2014_train
 from nst.eval import stylize_image
@@ -10,7 +11,8 @@ parser = argparse.ArgumentParser()
 # Common Args
 parser.add_argument('--task', required=True, type=str, choices=['download_data', 'train', 'stylize_image'],
                     help='The task to run')
-parser.add_argument('--run_id', required=True, type=str, help='Unique identifier for the model')
+parser.add_argument('--run_id', type=str, default=datetime.now().strftime("%Y%m%d%H%M%S"),
+                    help='Unique identifier for the model')
 
 # Task = train
 parser.add_argument('--style_image_path', type=str, help='Path to the style image')
