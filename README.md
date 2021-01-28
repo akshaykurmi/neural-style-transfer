@@ -23,8 +23,8 @@ $ python runner.py --task stylize_image --run_id <id> --content_image_path <path
 
 ### Examples
 
-|                                                                               |<img width="300" height="300" src="./data/sample_images/style_paint.jpg">   |<img width="300" height="300" src="./data/sample_images/style_stained-glass.jpg">   |
+|                                                                               |<img width="200" height="200" src="./data/sample_images/style_paint.jpg">   |<img width="200" height="200" src="./data/sample_images/style_stained-glass.jpg">   |
 |-------------------------------------------------------------------------------|----------------------------------------------------------------------------|------------------------------------------------------------------------------------|
-|<img width="300" height="300" src="./data/sample_images/original_dog.jpg">     |<img width="300" height="300" src="./data/sample_images/paint_dog.jpg">     |<img width="300" height="300" src="./data/sample_images/stained-glass_dog.jpg">     |
-|<img width="300" height="300" src="./data/sample_images/original_house.jpg">   |<img width="300" height="300" src="./data/sample_images/paint_house.jpg">   |<img width="300" height="300" src="./data/sample_images/stained-glass_house.jpg">   |
-|<img width="300" height="300" src="./data/sample_images/original_mountain.jpg">|<img width="300" height="300" src="./data/sample_images/paint_mountain.jpg">|<img width="300" height="300" src="./data/sample_images/stained-glass_mountain.jpg">|
+|<img width="200" height="200" src="./data/sample_images/original_dog.jpg">     |<img width="200" height="200" src="./data/sample_images/paint_dog.jpg">     |<img width="200" height="200" src="./data/sample_images/stained-glass_dog.jpg">     |
+|<img width="200" height="200" src="./data/sample_images/original_house.jpg">   |<img width="200" height="200" src="./data/sample_images/paint_house.jpg">   |<img width="200" height="200" src="./data/sample_images/stained-glass_house.jpg">   |
+|<img width="200" height="200" src="./data/sample_images/original_mountain.jpg">|<img width="200" height="200" src="./data/sample_images/paint_mountain.jpg">|<img width="200" height="200" src="./data/sample_images/stained-glass_mountain.jpg">|
