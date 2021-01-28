@@ -48,7 +48,7 @@ def load_image(image_fpath, image_size=None):
         height_and_width = tf.minimum(image_shape[0], image_shape[1])
         image = tf.image.resize_with_crop_or_pad(image, height_and_width, height_and_width)
         image = tf.image.resize(image, image_size, preserve_aspect_ratio=True)
-    return tf.math.round(image)
+    return tf.cast(tf.math.round(image), tf.float32)
 
 
 def save_image(image, output_fpath):
